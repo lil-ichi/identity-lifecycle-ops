@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="secBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080c14" />
+      <stop offset="50%" stop-color="#0d1526" />
+      <stop offset="100%" stop-color="#05080e" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 26px; fill: #ffffff; }
+    .subtitle { font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: #06b6d4; letter-spacing: 1px; }
+    .card-title { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 16px; fill: #ffffff; }
+    .metric-val { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 24px; fill: #06b6d4; }
+    .code-text { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #94a3b8; }
+    .highlight { fill: #ef4444; font-weight: 700; }
+    .green { fill: #10b981; font-weight: 600; }
+    .cyan { fill: #06b6d4; font-weight: 600; }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+    .pulse { animation: pulseGlow 3s infinite ease-in-out; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1000" height="560" rx="16" fill="url(#secBgGrad)" stroke="#1e293b" stroke-width="2" />
+
+  <!-- Header -->
+  <g transform="translate(40, 50)">
+    <rect x="0" y="0" width="42" height="42" rx="10" fill="#06b6d4" fill-opacity="0.2" stroke="#06b6d4" stroke-width="1.5" />
+    <text x="21" y="28" font-size="20" text-anchor="middle" fill="#ffffff">🛡️</text>
+    <text x="56" y="24" class="title">IdentityLifecycle Ops // SecOps Access Governance</text>
+    <text x="56" y="42" class="subtitle">MULTI-SAAS PROVISIONING • 1-CLICK KILLSWITCH • SHA-256 SOC2 LEDGER</text>
+  </g>
+
+  <!-- Metric KPI Cards -->
+  <g transform="translate(40, 120)">
+    <rect x="0" y="0" width="210" height="90" rx="10" fill="#0d1526" stroke="#1e293b" />
+    <text x="16" y="28" class="code-text" fill="#64748b">MANAGED IDENTITIES</text>
+    <text x="16" y="62" class="metric-val" fill="#ffffff">264</text>
+    <circle cx="185" cy="24" r="5" fill="#10b981" class="pulse" />
+
+    <rect x="235" y="0" width="210" height="90" rx="10" fill="#0d1526" stroke="#1e293b" />
+    <text x="251" y="28" class="code-text" fill="#64748b">ACTIVE SAAS GRANTS</text>
+    <text x="251" y="62" class="metric-val">1,056</text>
+
+    <rect x="470" y="0" width="210" height="90" rx="10" fill="#0d1526" stroke="#1e293b" />
+    <text x="486" y="28" class="code-text" fill="#64748b">KILLSWITCH REVOCATIONS</text>
+    <text x="486" y="62" class="metric-val" fill="#ef4444">100% PURGED</text>
+
+    <rect x="705" y="0" width="215" height="90" rx="10" fill="#0d1526" stroke="#1e293b" />
+    <text x="721" y="28" class="code-text" fill="#64748b">LEDGER VERIFICATION</text>
+    <text x="721" y="62" class="metric-val" fill="#10b981">100% VALID</text>
+  </g>
+
+  <!-- Live SecOps Console & Ledger Stream -->
+  <g transform="translate(40, 235)">
+    <!-- Left: Killswitch Telemetry -->
+    <rect x="0" y="0" width="455" height="280" rx="12" fill="#070b12" stroke="#1e293b" stroke-width="1.5" />
+    <rect x="0" y="0" width="455" height="34" rx="12" fill="#1e293b" />
+    <circle cx="20" cy="17" r="5" fill="#ef4444" />
+    <circle cx="36" cy="17" r="5" fill="#f59e0b" />
+    <circle cx="52" cy="17" r="5" fill="#10b981" />
+    <text x="72" y="22" font-family="'JetBrains Mono', monospace" font-size="12" fill="#94a3b8">secops@identity-governance ~ %</text>
+
+    <text x="20" y="65" class="code-text"><tspan class="highlight">[KILLSWITCH-TRIGGER]</tspan> Target: "bob.hostile@corp.io"</text>
+    <text x="20" y="90" class="code-text"><tspan class="cyan">[GITHUB-API]</tspan> DELETE /orgs/corp/members/bob-hostile (Purged ✓)</text>
+    <text x="20" y="115" class="code-text"><tspan class="cyan">[SLACK-API]</tspan> Terminated all OAuth tokens &amp; sessions ✓</text>
+    <text x="20" y="140" class="code-text"><tspan class="cyan">[AWS-IAM]</tspan> Revoked STS session keys + attached DenyAll ✓</text>
+    <text x="20" y="165" class="code-text"><tspan class="green">[LEDGER-SEAL]</tspan> Appended Block #42 (SHA-256 Chained)</text>
+    <text x="20" y="190" class="code-text"><tspan class="green">[HASH]</tspan> 4f7c89a0b12e345... (Immutable Anchor)</text>
+    <text x="20" y="215" class="code-text"><tspan class="cyan">[AUDIT-SCAN]</tspan> GET /audit/verify -&gt; 0 Tamper detected</text>
+    <text x="20" y="245" class="code-text" fill="#ef4444">● MTTR: 1.28s (Zero-Day Access Window Eliminated)</text>
+
+    <!-- Right: Matrix Diagram -->
+    <rect x="475" y="0" width="445" height="280" rx="12" fill="#070b12" stroke="#1e293b" stroke-width="1.5" />
+    <rect x="475" y="0" width="445" height="34" rx="12" fill="#1e293b" />
+    <text x="495" y="22" class="card-title" font-size="13">Multi-SaaS Identity Orchestration Pipeline</text>
+
+    <g transform="translate(495, 55)">
+      <rect x="0" y="0" width="405" height="42" rx="8" fill="#0d1526" stroke="#1e293b" />
+      <text x="14" y="26" class="code-text"><tspan class="cyan">GITHUB ORG</tspan> — Role-Based Team &amp; Repository Membership</text>
+
+      <rect x="0" y="52" width="405" height="42" rx="8" fill="#0d1526" stroke="#1e293b" />
+      <text x="14" y="78" class="code-text"><tspan class="cyan">SLACK WORKSPACE</tspan> — Channel Ingestion &amp; Automated Welcomes</text>
+
+      <rect x="0" y="104" width="405" height="42" rx="8" fill="#0d1526" stroke="#1e293b" />
+      <text x="14" y="130" class="code-text"><tspan class="cyan">AWS CLOUD IAM</tspan> — Temporary Assumed Roles &amp; STS Token Control</text>
+
+      <rect x="0" y="156" width="405" height="42" rx="8" fill="#0d1526" stroke="#10b981" />
+      <text x="14" y="182" class="code-text"><tspan fill="#10b981" font-weight="700">SOC2 LEDGER</tspan> — Cryptographically Chained SHA-256 Audit Trail</text>
+    </g>
+  </g>
+</svg>

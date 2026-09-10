@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IdentityLifecycle Ops // SecOps Access Control Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">🛡️</div>
+        <div class="brand-text">
+          <h2>IdentityOps</h2>
+          <span>SECOPS &amp; IAM AUTOMATION</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#directory" class="nav-item active">
+          <span class="icon">👥</span> Identity Directory
+        </a>
+        <a href="#audit" class="nav-item">
+          <span class="icon">⛓️</span> SOC2 Audit Ledger
+        </a>
+        <a href="#rbac" class="nav-item">
+          <span class="icon">📜</span> RBAC Matrices
+        </a>
+        <a href="/docs" target="_blank" class="nav-item">
+          <span class="icon">⚡</span> OpenAPI Docs
+        </a>
+      </nav>
+
+      <!-- Ledger Integrity Badge -->
+      <div class="ledger-health" id="ledgerHealthBadge">
+        <div class="status-indicator online"></div>
+        <div>
+          <p class="health-title">SHA-256 Ledger</p>
+          <span class="health-status" id="ledgerStatusText">Integrity Verified</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="top-header">
+        <div>
+          <h1>Identity Lifecycle &amp; Access Governance</h1>
+          <p class="subtitle">Automated Multi-SaaS Provisioning (GitHub, Slack, AWS) &amp; 1-Click Emergency Kill-Switch</p>
+        </div>
+        <div class="header-actions">
+          <button id="verifyAuditBtn" class="btn btn-secondary">
+            <span>🔍</span> Verify Audit Chain
+          </button>
+          <button id="onboardModalBtn" class="btn btn-primary">
+            <span>➕</span> Onboard New Identity
+          </button>
+        </div>
+      </header>
+
+      <!-- Metric Cards -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-label">TOTAL IDENTITIES</span>
+          <h3 id="statTotalIdentities">0</h3>
+          <span class="kpi-delta positive">Managed Directory</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">ACTIVE PROVISIONS</span>
+          <h3 id="statActiveCount">0</h3>
+          <span class="kpi-delta neutral">Multi-SaaS Grants</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">OFFBOARDED</span>
+          <h3 id="statOffboardedCount">0</h3>
+          <span class="kpi-delta warning">Access Revoked</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">KILLSWITCH EVENTS</span>
+          <h3 id="statKillswitchCount">0</h3>
+          <span class="kpi-delta negative">Emergency Purges</span>
+        </div>
+      </section>
+
+      <!-- Identity Directory Section -->
+      <section class="section-card" id="directory">
+        <div class="section-header">
+          <h2>Managed Identities &amp; Access Entitlements</h2>
+          <div class="filters">
+            <input type="text" id="searchInput" placeholder="Search name, email, department..." class="search-input">
+            <select id="statusFilter" class="status-select">
+              <option value="">All Statuses</option>
+              <option value="ACTIVE">Active</option>
+              <option value="OFFBOARDED">Offboarded</option>
+              <option value="KILLSWITCH_TERMINATED">KillSwitch Terminated</option>
+            </select>
+            <button id="refreshBtn" class="btn btn-icon">🔄</button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Identity Name</th>
+                <th>Role &amp; Dept</th>
+                <th>GitHub</th>
+                <th>Slack</th>
+                <th>AWS IAM Entity</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="employeeTableBody">
+              <tr>
+                <td colspan="7" class="loading-cell">Loading identities...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Cryptographic Audit Chain Section -->
+      <section class="section-card" id="audit">
+        <div class="section-header">
+          <div>
+            <h2>SOC2 Cryptographic Chained Audit Ledger</h2>
+            <p class="subtitle" style="font-size: 12px; margin-top: 2px;">Immutable SHA-256 blockchain-style event log of all access provisioning &amp; emergency revocations</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="loadAuditChain()">Refresh Ledger</button>
+        </div>
+
+        <div class="audit-stream" id="auditStreamContainer">
+          <!-- Injected via JavaScript -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Onboard Modal -->
+  <div class="modal-overlay" id="onboardModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Onboard New Identity</h3>
+        <button class="modal-close" id="onboardCloseBtn">&times;</button>
+      </div>
+      <form id="onboardForm">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="onboardFullName" placeholder="e.g. Alice Vance" required class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Work Email</label>
+          <input type="email" id="onboardEmail" placeholder="e.g. alice.vance@enterprise.io" required class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Department</label>
+          <input type="text" id="onboardDept" placeholder="e.g. Platform Engineering" required class="form-control">
+        </div>
+        <div class="form-group">
+          <label>RBAC Role Template</label>
+          <select id="onboardRole" class="form-control" required>
+            <option value="SOFTWARE_ENGINEER">Software Engineer (GitHub Push, Dev Slack, AWS Sandbox)</option>
+            <option value="DEVOPS_ENGINEER">DevOps / SRE (GitHub Admin, Infra Slack, AWS Admin)</option>
+            <option value="PRODUCT_MANAGER">Product Manager (GitHub Triage, Product Slack, AWS Analytics)</option>
+            <option value="FINANCE_ANALYST">Finance Analyst (Finance Slack, ERP Access)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>GitHub Username (Optional)</label>
+          <input type="text" id="onboardGithub" placeholder="e.g. alice-vance" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Slack Handle (Optional)</label>
+          <input type="text" id="onboardSlack" placeholder="e.g. @alice.vance" class="form-control">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('onboardModal').style.display='none'">Cancel</button>
+          <button type="submit" class="btn btn-primary">⚡ Execute 1-Click Provisioning</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Emergency KillSwitch Modal -->
+  <div class="modal-overlay" id="killswitchModal" style="display: none;">
+    <div class="modal-card modal-danger">
+      <div class="modal-header">
+        <h3 style="color: var(--accent-red);">🚨 Emergency Kill-Switch Activation</h3>
+        <button class="modal-close" onclick="document.getElementById('killswitchModal').style.display='none'">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: #fca5a5; margin-bottom: 16px;">
+          <strong>WARNING:</strong> This action will <strong>INSTANTANEOUSLY PURGE</strong> all GitHub organization access, terminate all active Slack sessions, revoke AWS IAM STS tokens, and record a cryptographically signed emergency event in the SOC2 ledger.
+        </p>
+        <input type="hidden" id="killswitchTargetId">
+        <div class="form-group">
+          <label>Incident / Departure Reason</label>
+          <input type="text" id="killswitchReason" placeholder="e.g. Security Incident / Compromised Credentials" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>SecOps Authorization Code</label>
+          <input type="text" id="killswitchAuthCode" placeholder="e.g. SEC-KILL-991" class="form-control" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('killswitchModal').style.display='none'">Abort</button>
+          <button type="button" class="btn btn-danger" onclick="confirmKillswitch()">🔥 TRIGGER IMMEDIATE ACCESS PURGE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Details / Grants Modal -->
+  <div class="modal-overlay" id="detailsModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="detailsTitle">Identity Profile</h3>
+        <button class="modal-close" onclick="document.getElementById('detailsModal').style.display='none'">&times;</button>
+      </div>
+      <div class="modal-body" id="detailsBody"></div>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

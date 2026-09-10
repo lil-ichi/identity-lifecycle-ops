@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  identity-lifecycle-ops:
+    build: .
+    container_name: identity_lifecycle_ops
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - PROJECT_NAME=IdentityLifecycle Ops
+      - DATABASE_URL=sqlite+aiosqlite:///./identities.db
+      - GITHUB_ORG_NAME=enterprise-corp
+      - SLACK_WELCOME_CHANNEL=C_GENERAL
+      - AWS_REGION=us-east-1
+    volumes:
+      - ./identities.db:/app/identities.db
